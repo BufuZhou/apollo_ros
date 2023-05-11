@@ -75,6 +75,10 @@ class PlanningNode {
    */
   void Reset();
 
+  // lzh
+  void RawPathPb();
+  // lzh
+
  private:
   void RunOnce();
 
@@ -82,7 +86,10 @@ class PlanningNode {
       const double header_time,
       const std::vector<TrajectoryPoint>& discretized_trajectory);
 
+ public:
   Planning planning_;
+
+  static int count_;
 };
 
 }  // namespace planning

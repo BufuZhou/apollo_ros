@@ -36,7 +36,22 @@ add_executable(${PROJECT_NAME}
   # planner
   src/planner/rtk_replay_planner.cc
 )
+add_executable(raw_path_node
+  src/raw_path.cpp
+  src/planning_node.cc
+  src/planning.cc
+  src/planner_factory.cc
+  # common
+  src/common/planning_gflags.cc
+  # planner
+  src/planner/rtk_replay_planner.cc
+)
+
 add_dependencies(${PROJECT_NAME} 
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
+  ${catkin_EXPORTED_TARGETS}
+)
+add_dependencies(raw_path_node 
   ${${PROJECT_NAME}_EXPORTED_TARGETS} 
   ${catkin_EXPORTED_TARGETS}
 )
@@ -46,9 +61,19 @@ target_link_libraries(${PROJECT_NAME}
   glog
   gflags
 )
+target_link_libraries(raw_path_node
+  ${catkin_LIBRARIES}
+  protobuf
+  glog
+  gflags
+)
 
 # install
 install(TARGETS ${PROJECT_NAME} 
+	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+)
+install(TARGETS raw_path_node 
 	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )

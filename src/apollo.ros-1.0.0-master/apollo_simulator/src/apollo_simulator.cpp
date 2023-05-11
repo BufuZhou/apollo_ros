@@ -194,6 +194,7 @@ void Simulator::PublishPlanningTrajectory() {
   if (AdapterManager::GetPlanningTrajectory()->Empty()) {
     return;
   }
+  // AdapterManager::GetPlanningTrajectory()->
   const auto &trajectory = AdapterManager::GetPlanningTrajectory()->GetLatestObserved();
   // AERROR << "trajectory: " << trajectory.ShortDebugString();
   nav_msgs::Path path;

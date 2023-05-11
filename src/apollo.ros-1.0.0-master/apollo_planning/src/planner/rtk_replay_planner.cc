@@ -59,7 +59,7 @@ bool RTKReplayPlanner::Plan(
     const TrajectoryPoint& start_point,
     std::vector<TrajectoryPoint>* ptr_discretized_trajectory) {
 
-  if (complete_rtk_trajectory_.empty() || complete_rtk_trajectory_.size() < 2) {
+  if (trajectory_.empty() || trajectory_.size() < 2) {
     AERROR << "RTKReplayPlanner doesn't have a recorded trajectory or "
               "the recorded trajectory doesn't have enough valid trajectory "
               "points.";
@@ -67,12 +67,12 @@ bool RTKReplayPlanner::Plan(
   }
 
   std::size_t matched_index =
-      QueryPositionMatchedPoint(start_point, complete_rtk_trajectory_);
+      QueryPositionMatchedPoint(start_point, trajectory_);
 
   std::size_t forward_buffer = FLAGS_rtk_trajectory_forward;
   std::size_t end_index =
-      matched_index + forward_buffer >= complete_rtk_trajectory_.size()
-          ? complete_rtk_trajectory_.size() - 1
+      matched_index + forward_buffer >= trajectory_.size()
+          ? trajectory_.size() - 1
           : matched_index + forward_buffer - 1;
 
   if (ptr_discretized_trajectory->size() > 0) {
@@ -81,11 +81,11 @@ bool RTKReplayPlanner::Plan(
 
   ptr_discretized_trajectory->insert(
       ptr_discretized_trajectory->begin(),
-      complete_rtk_trajectory_.begin() + matched_index,
-      complete_rtk_trajectory_.begin() + end_index + 1);
+      trajectory_.begin() + matched_index,
+      trajectory_.begin() + end_index + 1);
 
   // reset relative time
-  double zero_time = complete_rtk_trajectory_[matched_index].relative_time;;
+  double zero_time = trajectory_[matched_index].relative_time;;
   for (std::size_t i = 0; i < ptr_discretized_trajectory->size(); ++i) {
     (*ptr_discretized_trajectory)[i].relative_time -= zero_time;
   }
@@ -102,8 +102,8 @@ bool RTKReplayPlanner::Plan(
 }
 
 void RTKReplayPlanner::ReadTrajectoryFile(const std::string& filename) {
-  if (!complete_rtk_trajectory_.empty()) {
-    complete_rtk_trajectory_.clear();
+  if (!trajectory_.empty()) {
+    trajectory_.clear();
   }
 
   std::ifstream file_in(filename.c_str());
@@ -145,7 +145,7 @@ void RTKReplayPlanner::ReadTrajectoryFile(const std::string& filename) {
     point.theta = std::stod(tokens[8]);
 
     point.s = std::stod(tokens[10]);
-    complete_rtk_trajectory_.push_back(point);
+    trajectory_.push_back(point);
   }
 
   file_in.close();

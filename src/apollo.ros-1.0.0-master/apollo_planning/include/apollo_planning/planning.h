@@ -53,6 +53,10 @@ class Planning {
    */
   ~Planning() = default;
 
+  // lzh
+  std::vector<TrajectoryPoint> GetRawPath();
+  // lzh
+
   /**
    * @brief Plan the trajectory given current vehicle state
    * @param vehicle_state variable describes the vehicle state, including

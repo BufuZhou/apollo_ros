@@ -63,6 +63,10 @@ class Planner {
    */
   virtual ~Planner() = default;
 
+  // lzh
+  std::vector<TrajectoryPoint> trajectory_;
+  // lzh
+
   /**
    * @brief Compute a trajectory for execution.
    * @param start_point The trajectory point where planning starts

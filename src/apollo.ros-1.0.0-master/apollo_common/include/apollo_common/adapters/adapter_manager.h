@@ -208,6 +208,10 @@ class AdapterManager {
   REGISTER_ADAPTER(Prediction);
   REGISTER_ADAPTER(TrafficLightDetection);
 
+  // lzh
+  // REGISTER_ADAPTER(RawTrajectory);
+  // lzh
+
   DECLARE_SINGLETON(AdapterManager);
 };
 

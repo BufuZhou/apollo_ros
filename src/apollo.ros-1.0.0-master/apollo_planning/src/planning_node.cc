@@ -31,6 +31,7 @@
  *****************************************************************************/
 
 #include "apollo_planning/planning_node.h"
+#include <nav_msgs/Path.h>
 
 #include "apollo_common/adapters/adapter_manager.h"
 #include "apollo_common/log.h"

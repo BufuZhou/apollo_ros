@@ -5,4 +5,9 @@
     --adapter_config_path=$(find apollo_planning)/conf/adapter.conf
     --rtk_trajectory_filename=$(find apollo_planning)/data/garage.csv"
   output="screen"/>
+  <node pkg="apollo_planning" type="raw_path_node" name="row_path" args = "
+  --flagfile=$(find apollo_planning)/conf/planning.conf
+  --adapter_config_path=$(find apollo_planning)/conf/adapter.conf
+  --rtk_trajectory_filename=$(find apollo_planning)/data/garage.csv"
+  output="screen"/>
 </launch>

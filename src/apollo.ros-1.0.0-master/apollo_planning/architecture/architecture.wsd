@@ -1,0 +1,75 @@
+@startuml
+class PlanningNode {
+  - Planning planning_
+  + void Run()
+  + void Reset()
+  - void RunOnce()
+  - ADCTrajectory ToTrajectoryPb(const double header_time,
+      const std::vector<TrajectoryPoint>& discretized_trajectory)
+}
+class Planning {
+  - std::unique_ptr<Planner> ptr_planner_
+  - std::vector<TrajectorPoint> last_trajectory_
+  - double last_header_time_
+  + bool Plan(const common::vehicle_state::VehicleState& vehicle_state,const bool is_on_auto_mode,
+        const double publish_time, std::vector<TrajectoryPoint>* discretized_trajectory)
+  - std::pair<TrajectoryPoint, std::size_t> ComputeStartingPointFromLastTrajectory(const double curr_time) const
+  - TrajectoryPoint ComputeStartingPointFromVehicleState(
+        const common::vehicle_state::VehicleState& vehicle_state,const double forward_time) const;
+  - std::vector<TrajectoryPoint> GetOverheadTrajectory(
+        const std::size_t matched_index, const std::size_t buffer_size);
+}
+note left of Planning
+  构造函数调用PlannerFactory的静态方法
+end note
+class PlannerFactory {
+  + {static} std::unique_ptr<Planner> CreateInstance(
+                const PlannerType& planner_tyep)
+}
+enum PlannerType {
+  RTK_PLANNER
+  OTHER
+}
+abstract class Planner {
+  + {abstract} bool Plan(const TrajectoryPoint& start_point,
+                  std::vector<TrajectoryPoint> *discretized_trajectory) = 0;
+}
+class RTKReplayPlanner {
+  - std::vector<TrajectoryPoint> complete_rtk_trajectory_
+  + void ReadTrajectoryFile(const std::string& filename)
+  + bool Plan(const TrajectoryPoint& start_point,
+        std::vector<TrajectoryPoint> *ptr_trajectory)
+  - std::size_t QueryPositionMatchedPoint(const TrajectoryPoint& start_point,
+        const std::vector<TrajectoryPoint>& trajectory) const
+}
+class PathPoint {
+  + double x
+  + double y
+  + double z
+  + double theta
+  + double kappa
+  + double s
+}
+class TrajectoryPoint {
+  double relative_time
+  double v
+  double a
+  double dkappa
+}
+PathPoint <|-- TrajectoryPoint
+class ADCTrajectory
+note right of ADCTrajectory
+  最终得到车辆行驶的轨迹
+end note
+
+PlanningNode --> Planning
+PlanningNode ..> ADCTrajectory
+' PlanningNode ..> TrajectoryPoint
+Planning --> Planner
+' Planning ..> TrajectoryPoint
+PlannerFactory ..> PlannerType
+' Planner ..> TrajectoryPoint
+Planner <|-- RTKReplayPlanner
+' RTKReplayPlanner --> TrajectoryPoint
+Planning ..> PlannerFactory
+@enduml

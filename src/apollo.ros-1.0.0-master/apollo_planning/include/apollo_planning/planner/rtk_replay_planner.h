@@ -84,7 +84,7 @@ class RTKReplayPlanner : public Planner {
       const TrajectoryPoint& start_point,
       const std::vector<TrajectoryPoint>& trajectory) const;
 
-  std::vector<TrajectoryPoint> complete_rtk_trajectory_;
+  // std::vector<TrajectoryPoint> complete_rtk_trajectory_;
 };
 
 }  // namespace planning
