@@ -48,9 +48,11 @@ Planning::Planning() {
   ptr_planner_ = PlannerFactory::CreateInstance(PlannerType::RTK_PLANNER);
 }
 
+// lzh
 std::vector<TrajectoryPoint> Planning::GetRawPath() {
   return ptr_planner_->trajectory_;
 }
+// lzh
 
 bool Planning::Plan(const common::vehicle_state::VehicleState& vehicle_state,
                     const bool is_on_auto_mode, const double publish_time,
