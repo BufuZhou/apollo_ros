@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /home/lzh/apollo_ros/devel/setup.bash
+source ~/apollo_ros/devel/setup.bash
 
 rostopic pub -r 1 /data_collection nmea_msgs/Sentence -- "header:
   seq: 3

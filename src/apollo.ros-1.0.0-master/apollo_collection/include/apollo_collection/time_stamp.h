@@ -12,6 +12,4 @@ std::string GetTimeStamp();
 }  // collection
 }  // apollo
 
-
-
 #endif  // __APOLLO_COLLECTION_TIME_STAMP_H__

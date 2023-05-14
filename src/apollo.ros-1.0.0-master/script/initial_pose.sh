@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /home/lzh/apollo_ros/devel/setup.bash
+source ~/apollo_ros/devel/setup.bash
 
 rostopic pub -1 /initialpose geometry_msgs/PoseWithCovarianceStamped -- "header:
   seq: 3

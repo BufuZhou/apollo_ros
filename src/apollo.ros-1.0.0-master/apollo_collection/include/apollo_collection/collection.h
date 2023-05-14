@@ -9,9 +9,22 @@ namespace apollo {
 namespace collection {
 
 struct ParseInfo {
-  double longitude;
-  double latitud;
-  double theta;
+  // x,y,z,speed,acceleration,curvature,curvature_change_rate,
+  // time,theta,gear,s,throttle,brake,steering
+  double x = 0;
+  double y = 0;
+  double z = 0;
+  double speed = 0;
+  double acceleration = 0;
+  double curvature = 0;
+  double curvature_change_rate = 0;
+  double time = 0;
+  double theta = 0;
+  double gear = 0;
+  double s = 0;
+  double throttle = 0;
+  double brake = 0;
+  double steering = 0;
 };
 
 class Collection {
