@@ -13,14 +13,14 @@ Collection::Collection() {
   std::string timestamp = GetTimeStamp();
   std::string file_name = "data" + timestamp + ".csv";
   data_file_.open(file_name.c_str());
-  data_file_ << "x,y,z,speed,acceleration,curvature,curvature_change_rate, \
+  data_file_ << "x,y,z,speed,acceleration,curvature,curvature_change_rate,\
 time,theta,gear,s,throttle,brake,steering" << std::endl;
 }
 
 Collection::Collection(const std::string& name) {
   std::string file_name = name;
   data_file_.open(file_name.c_str());
-  data_file_ << "x,y,z,speed,acceleration,curvature,curvature_change_rate, \
+  data_file_ << "x,y,z,speed,acceleration,curvature,curvature_change_rate,\
 time,theta,gear,s,throttle,brake,steering" << std::endl;
 }
 

@@ -138,6 +138,9 @@ add_executable(${PROJECT_NAME}
                src/collection.cpp
                src/time_stamp.cpp
                )
+add_executable(oscilloscope
+               src/oscilloscope.cpp
+               )
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

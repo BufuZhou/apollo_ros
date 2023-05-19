@@ -1,4 +1,4 @@
-# apollo.ros-1.0.0
+# apollo_ros
 
 ## 简介
 
@@ -7,10 +7,14 @@
 - 学习apollo框架设计
 - 学习apollo中的控制算法
 
-目前只针对apollo中主要模块进行了移植，移植模块有:
+ 实现场景：
+  通过录制的轨迹实现车辆自动循迹功能
+
+apollo_ros模块有:
 
 ```bash
 apollo_ros
+    ├── apollo_collection
     ├── apollo_common
     ├── apollo_control
     ├── apollo_decision
@@ -81,12 +85,39 @@ apollo_ros
 
 ##  测试
 
+### 数据采集
+1. step1 启动rtk节点
+>apollo_collection
+
+有两种方式，一种是真实rtk的节点，一种是模拟rtk的数据格式的节点
+
+先启动roscore
+```bash
+roscore
+```
+* 硬件驱动
+  ```bash
+  rosrun nmea_navsat_driver nmea_topic_serial_reader _port:=/dev/ttyUSB0 _baud:=55600
+  ```
+* 模拟rtk节点
+  ```shell
+  cd ~/apollo_ros/src/apollo.ros-1.0.0-master/apollo_collection/script
+  sudo chmod +x data_collection.sh
+  ./data_collection.sh
+  ```
+2. 运行ros节点
+```shell
+roslaunch apollo_collecton data_collection.launch
+```
+在apollo_ros目录下会存下一个*garage.csf*文件，数据采集完成
+
+### 循迹仿真
+>apollo_simulator
+
 这里主要使用`apollo_simulator`仿真工具进行规划控制（pnc）进行测试，测试指令如下：
 
 ```shell
 roslaunch apollo_simulator simulation.launch
 ```
-
-## 维护者
-
-[@Forrest](709335543@qq.com)
+会自动加载`~/apollo_ros/src/apollo.ros-1.0.0-master/apollo_planning/data/`目录下的*garage.csf*文件，作为初始路径的输入
+在rviz中点击工具栏中的`2D Pose Estimate`的按钮，在主窗口内给定一个初始位姿，车辆就可以按照初始路径进行循迹
