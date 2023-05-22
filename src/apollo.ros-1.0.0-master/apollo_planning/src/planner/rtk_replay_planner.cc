@@ -129,20 +129,21 @@ void RTKReplayPlanner::ReadTrajectoryFile(const std::string& filename) {
       continue;
     }
 
+    // lzh
+    // modify input parameter
     TrajectoryPoint point;
-    point.x = std::stod(tokens[0]);
-    point.y = std::stod(tokens[1]);
+    // point.x = std::stod(tokens[0]);
+    point.x = (std::stod(tokens[0]) -31.28696016) * 100000;
+    // point.y = std::stod(tokens[1]);
+    point.y = (std::stod(tokens[1]) - 121.1473232) * 100000;
     point.z = std::stod(tokens[2]);
-
     point.v = std::stod(tokens[3]);
     point.a = std::stod(tokens[4]);
-
     point.kappa = std::stod(tokens[5]);
     point.dkappa = std::stod(tokens[6]);
-
     point.relative_time = std::stod(tokens[7]);
-
-    point.theta = std::stod(tokens[8]);
+    // point.theta = std::stod(tokens[8]);
+    point.theta = (std::stod(tokens[8]) - 90) / 180 * M_PI;
 
     point.s = std::stod(tokens[10]);
     trajectory_.push_back(point);
